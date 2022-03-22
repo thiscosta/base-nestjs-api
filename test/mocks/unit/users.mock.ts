@@ -1,4 +1,4 @@
-export const mockCreateUserPayload = {
+export const mockValidCreateUserPayload = {
   name: 'testUser',
   email: 'test@test.com',
 };

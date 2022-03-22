@@ -1,9 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from 'src/prisma/prisma.service';
-import {
-  mockCreateUserPayload,
-  mockCreateUserResponse,
-} from 'test/mocks/unit/users.mock';
+import { mockValidCreateUserPayload } from 'test/mocks/unit/users.mock';
 import { UserController } from './users.controller';
 import { UserService } from './users.service';
 
@@ -21,12 +18,27 @@ describe('UserController', () => {
     userService = user.get<UserService>(UserService);
   });
 
-  it('should return the created user with ID', () => {
-    userService.createUser = jest
-      .fn()
-      .mockReturnValueOnce({ ...mockCreateUserResponse });
-    expect(userController.createUser(mockCreateUserPayload)).toStrictEqual({
-      ...mockCreateUserResponse,
+  describe('create user', () => {
+    beforeEach(jest.clearAllMocks);
+
+    it('should return the created user with ID', () => {
+      userService.createUser = jest
+        .fn()
+        .mockReturnValue({ ...mockValidCreateUserPayload });
+      expect(
+        userController.createUser(mockValidCreateUserPayload),
+      ).toStrictEqual({
+        ...mockValidCreateUserPayload,
+      });
+    });
+
+    it('should throw if user service returns an unexpected error', () => {
+      userService.createUser = jest
+        .fn()
+        .mockReturnValue(Promise.reject('error'));
+      return expect(
+        userController.createUser(mockValidCreateUserPayload),
+      ).rejects.toEqual('error');
     });
   });
 });
