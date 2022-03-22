@@ -19,6 +19,7 @@ module.exports = {
     '!src/**/*.module.(t|j)s',
     '!src/main.ts',
     '!src/config/**',
+    '!src/prisma/**',
   ],
   coverageDirectory: '../coverage',
   testEnvironment: 'node',

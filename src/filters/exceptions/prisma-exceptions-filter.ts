@@ -17,13 +17,16 @@ export class PrismaExceptionsFilter implements ExceptionFilter {
     const statusByErrorCode: Record<string, ErrorType> = {
       P2002: {
         status: 409,
-        message: `Unique constraint violation: ${exception.meta['target']}`,
+        message: `Unique constraint violation: ${
+          exception.meta && exception.meta['target']
+        }`,
         error: 'Conflict',
       },
       default: { status: 500, message: 'Unexpected error', error: 'Error' },
     };
 
-    const { status, message, error } = statusByErrorCode[exception.code];
+    const { status, message, error } =
+      statusByErrorCode[exception.code] || statusByErrorCode.default;
 
     response.status(status).json({
       statusCode: status,
