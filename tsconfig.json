@@ -19,7 +19,8 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "config/*": ["./src/config/*"],
-      "src/*": ["./src/*"]
+      "src/*": ["./src/*"],
+      "test/*": ["./test/*"]
     }
   }
 }
