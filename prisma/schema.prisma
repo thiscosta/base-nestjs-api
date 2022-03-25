@@ -11,7 +11,46 @@ datasource db {
 }
 
 model User {
-  id    Int    @id @default(autoincrement())
-  email String @unique
-  name  String
+  id                         Int                          @id @default(autoincrement())
+  email                      String                       @unique
+  firstName                  String                       @map("first_name")
+  lastName                   String                       @map("last_name")
+  createdAt                  DateTime                     @default(now()) @map("created_at")
+  updatedAt                  DateTime                     @updatedAt @map("updated_at")
+  UserCredentials            UserCredential?
+  UserAuthenticationProvider UserAuthenticationProvider[]
+
+  @@map("users")
+}
+
+model AuthenticationProvider {
+  name      String   @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("authentication_providers")
+}
+
+model UserCredential {
+  password          String
+  resetPasswordHash String   @map("reset_password_hash")
+  userId            Int      @unique @map("user_id")
+  user              User     @relation(fields: [userId], references: [id])
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  @@map("user_credentials")
+}
+
+model UserAuthenticationProvider {
+  provider  String
+  userId    Int      @map("user_id")
+  user      User     @relation(fields: [userId], references: [id])
+  key       String?
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+
+  @@unique([userId, provider])
+  @@map("user_authentication_providers")
 }
