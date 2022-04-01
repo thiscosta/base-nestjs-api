@@ -1,4 +1,4 @@
-import { PrismaExceptionsFilter } from './prisma-exceptions-filter';
+import { PrismaExceptionsFilter } from './prisma-exceptions.filter';
 
 describe('PrismaExceptionsFilter', () => {
   let prismaExceptionsFilter;
