@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { User } from '@prisma/client';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserWithEmailPasswordDto } from './dto/create-user-with-email-password.dto';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { randomBytes } from 'crypto';
-import { ROLES } from '../roles/roles.constants';
+import { ROLES } from 'src/roles/roles.constants';
 
 @Injectable()
 export class UserService {
