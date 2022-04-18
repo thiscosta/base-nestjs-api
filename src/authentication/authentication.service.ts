@@ -62,6 +62,7 @@ export class AuthenticationService {
       id: user.id,
       firstName: user.firstName,
       lastName: user.lastName,
+      role: user.role,
     };
     return {
       access_token: this.jwtTokenService.sign(bodyToSign),

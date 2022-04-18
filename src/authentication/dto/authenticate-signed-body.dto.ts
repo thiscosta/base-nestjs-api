@@ -3,4 +3,5 @@ export type AuthenticateSignedBody = {
   firstName: string;
   lastName: string;
   id: number;
+  role: string;
 };

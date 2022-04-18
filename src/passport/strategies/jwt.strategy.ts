@@ -17,12 +17,13 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   async validate(
     accessTokenData: AuthenticateSignedBody,
   ): Promise<AuthenticateSignedBody> {
-    const { id, email, firstName, lastName } = accessTokenData;
+    const { id, email, firstName, lastName, role } = accessTokenData;
     return {
       id,
       email,
       firstName,
       lastName,
+      role,
     };
   }
 }
