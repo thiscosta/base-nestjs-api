@@ -1,73 +1,108 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Base NestJS API
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This project is a skeleton for a generic NestJS API with an user table, 
+authentication and role based authorization, and was created to be used as a startup for backend projects.
 
-## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Features
+
+- User creation
+- Authentication (with username/password)
+- User listing with role based authorization
+
+There are some decorators that can be used on new endpoints, like **UseGuards** for endpoints that needs authentication, and the **Roles** that can be used in conjunction with **UseGuards** to implement role based authorization 
+
+
+## Libraries
+
+**Authentication:** @nestjs/jwt, @nestjs/passport, passport, passport-jwt, passport-local
+
+**Encryption:** bcrypt
+
+**ORM:** Prisma
+
+**Utilities:** class-transformers, class-validator
+
 
 ## Installation
 
-```bash
-$ npm install
-```
-
-## Running the app
+After cloning the repo, enter his folder using:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run dev
-
-# production mode
-$ npm run prod
+  cd base-nestjs-api
 ```
 
-## Test
+Install the dependencies using
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+  npm install
+  
+  yarn install
 ```
 
-## Support
+Setup the **.env** file at the root folder. It should be something similar to this:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```
+DATABASE_URL="postgresql://postgres:root@localhost:5432/database?schema=public"
+SALT_ROUNDS=10
+JWT_SECRET=12345678910
+JWT_EXPIRE=3600s
+```
 
-## Stay in touch
+Apply the migration to the database by running the **migrate:deploy** script:
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```
+npm run migrate:deploy
 
-## License
+yarn migrate:deploy
+```
 
-Nest is [MIT licensed](LICENSE).
+Now you can run the application by executing:
+
+```
+npm run dev
+
+yarn dev
+```
+
+And the application will be running on your **3000** port.
+
+
+## API Documentation
+
+#### Create an user
+
+```http
+  POST /users
+```
+
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `email` | `string` | **Mandatory**. The user's email used to sign in |
+| `password` | `string` | **Mandatory**. The user's password |
+| `firstName` | `string` | **Mandatory**. The user's first name |
+| `lastName` | `string` | **Mandatory**. The user's last name |
+
+#### Authenticate with email and password
+
+```http
+  POST /authenticate/password
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `email` | `string` | **Mandatory**. The user's email |
+| `password` | `string` | **Mandatory**. The user's password |
+
+#### List all the users (only for admin users)
+
+```http
+  GET /users
+```
+
+
+## Autores
+
+- [@thiscosta](https://www.github.com/thiscosta)
+
