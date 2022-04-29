@@ -1,14 +1,12 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from 'src/app.module';
-import { PrismaExceptionsFilter } from 'src/filters/exceptions/prisma-exceptions.filter';
-import { NotFoundExceptionFilter } from './filters/exceptions/not-found-exception.filter';
+import { globalExceptions } from './filters/global.exceptions';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalFilters(new NotFoundExceptionFilter());
-  app.useGlobalFilters(new PrismaExceptionsFilter());
+  globalExceptions.forEach((exception) => app.useGlobalFilters(exception));
   await app.listen(3000);
 }
 bootstrap();
