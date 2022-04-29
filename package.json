@@ -22,6 +22,9 @@
     "migrate:dev": "prisma migrate dev",
     "migrate": "prisma migrate"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^2.0.0",

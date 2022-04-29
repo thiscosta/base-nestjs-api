@@ -5,6 +5,7 @@ import { CreateUserWithEmailPasswordDto } from './dto/create-user-with-email-pas
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import { randomBytes } from 'crypto';
+import { ROLES } from 'src/roles/roles.constants';
 
 @Injectable()
 export class UserService {
@@ -30,8 +31,9 @@ export class UserService {
     lastName,
   }: CreateUserWithEmailPasswordDto): Promise<User> {
     const user = await this.prismaService.$transaction(async (prisma: any) => {
+      const userData = { email, firstName, lastName, role: ROLES.USER };
       const user: User = await prisma.user.create({
-        data: { email, firstName, lastName },
+        data: userData,
       });
       const hashedPassword = await bcrypt.hash(
         password,
