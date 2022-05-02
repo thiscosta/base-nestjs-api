@@ -77,7 +77,7 @@ And the application will be running on your **3000** port.
   POST /users
 ```
 
-| Parâmetro   | Tipo       | Descrição                           |
+| Parameter   | Type       | Description                           |
 | :---------- | :--------- | :---------------------------------- |
 | `email` | `string` | **Mandatory**. The user's email used to sign in |
 | `password` | `string` | **Mandatory**. The user's password |
@@ -90,7 +90,7 @@ And the application will be running on your **3000** port.
   POST /authenticate/password
 ```
 
-| Parâmetro   | Tipo       | Descrição                                   |
+| Parameter   | Type       | Description                                   |
 | :---------- | :--------- | :------------------------------------------ |
 | `email` | `string` | **Mandatory**. The user's email |
 | `password` | `string` | **Mandatory**. The user's password |
@@ -102,7 +102,7 @@ And the application will be running on your **3000** port.
 ```
 
 
-## Autores
+## Authors
 
 - [@thiscosta](https://www.github.com/thiscosta)
 
